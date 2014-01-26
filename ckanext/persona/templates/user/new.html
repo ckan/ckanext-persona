@@ -10,11 +10,7 @@
       <fieldset>
         <legend>{{ _('Use your email address') }}</legend>
         <div class="control-group control-medium">
-          <button class="btn btn-large"
-                  title="{{ _('Login using just your email address, via Mozilla Persona') }}"
-                  data-module="persona" data-module-action="login">
-            <img src="/persona.svg" style="height:14px; vertical-align:sub;"></img> Email
-          </button>
+          {% snippet 'snippets/persona_login_button.html' %}
         </div>
       </fieldset>
 
