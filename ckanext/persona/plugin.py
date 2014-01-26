@@ -166,7 +166,6 @@ def verify_login(assertion):
     if response.ok:
         verification_data = json.loads(response.content)
         if verification_data['status'] == 'okay':
-            # Log the user in.
             email = verification_data['email']
             return email
         else:
