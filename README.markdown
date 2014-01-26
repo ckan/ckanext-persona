@@ -20,11 +20,15 @@ To install, activate your CKAN virtualenv and then do:
     cd ckanext-persona
     python setup.py develop
 
-Then add 'persona' to the ckan.plugins line in your CKAN config file, e.g:
+Then add 'persona' to the ckan.plugins line in your CKAN config file, for example:
 
     ckan.plugins = resource_proxy stats datastore persona
+    
+Also make sure you have `ckan.site_url` set correctly in your config file, for example:
 
-Finally, restart CKAN.
+    ckan.site_url = http://scotdata.ckan.net
+
+Finally, restart your web server.
 
 
 TODO
