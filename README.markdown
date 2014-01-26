@@ -11,7 +11,8 @@ or polishing and isn't suitable for production.
 
 There's one big problem with this implementation - Persona uses email addresses
 to uniquely identify users, but in CKAN two users can have the same email
-address. If that happens, ckanext-persona will crash.
+address. If that happens, ckanext-persona will crash. This needs to be fixed
+in CKAN - user email addresses should be unique, and they should be verified.
 
 To install, activate your CKAN virtualenv and then do:
 
