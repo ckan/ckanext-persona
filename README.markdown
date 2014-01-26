@@ -29,13 +29,13 @@ Finally, restart CKAN.
 TODO
 ---
 
-- [ ] Follow the Persona UI guidelines
-- [ ] Verify SSL certificates
-- [ ] Implement CSRF protection
-- [ ] Tests
-- [ ] Better error handling when verification fails
-- [ ] Generate better unique user names based on emails
-- [ ] Better random password generator or enable users without passwords in
-      CKAN
-- [ ] API function for searching for users by email
-- [ ] Handle multiple users with the same email address in CKAN ... but how?
+- Generate better unique user names based on emails
+  (e.g. first half of email, with a random number appended if necessary)
+- Tests
+- Verify SSL certificates
+- Implement CSRF protection
+- Better error handling when verification fails
+- Better random password generator
+- Add an API function to CKAN for searching for users by email, so this plugin
+  doesn't need to access CKAN's model directly to do it
+- Handle multiple users with the same email address in CKAN
