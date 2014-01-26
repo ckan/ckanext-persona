@@ -33,7 +33,7 @@ TODO
 - Generate better unique user names based on emails
   (e.g. first half of email, with a random number appended if necessary)
 - Tests
-- Verify SSL certificates
+- Verify SSL certificates (or is `requests` already doing this?)
 - Implement CSRF protection
 - Better error handling when verification fails
 - Better random password generator
