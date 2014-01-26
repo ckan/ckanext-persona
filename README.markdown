@@ -6,6 +6,8 @@ A CKAN extension that lets users login to a site using
 using just their existing email address, without having to create a new user
 name and password for CKAN.
 
+Here's [short video of logging in to CKAN with Persona](https://vimeo.com/85054941).
+
 This is an early, proof-of-concept implementation. It hasn't had much testing
 or polishing and isn't suitable for production.
 
