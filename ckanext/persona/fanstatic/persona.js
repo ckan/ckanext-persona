@@ -1,23 +1,32 @@
 ckan.module('persona', function(jQuery, _) {
   return {
+    options: {
+      user: null
+    },
     initialize: function() {
 
       jQuery.proxyAll(this, /_on/);
 
-      // Tell Persona what user is logged in and what functions to call when a
-      // user logs in or logs out.
-      // FIXME: null should be the email address of the logged-in user, when
-      // someone's logged in.
-      navigator.id.watch({
-        loggedInUser:null,
-        onlogin: this._onlogin,
-        onlogout: this._onlogout
-      });
-
-      if (this.options.action == "login") {
-        this.el.on('click', this._on_login_clicked);
-      } else {
-        this.el.on('click', this._on_logout_clicked);
+      switch (this.options.action) {
+        case "watch":
+          // Tell Persona what user is logged in and what functions to call
+          // when a user logs in or logs out.
+          navigator.id.watch({
+            loggedInUser: this.options.user,
+            onlogin: this._onlogin,
+            onlogout: this._onlogout
+          });
+          break;
+        case "login":
+          // This javascript module was called on a login button, attach the
+          // on login method to the element.
+          this.el.on('click', this._on_login_clicked);
+          break;
+        case "logout":
+          // This javascript module was called on a logout button, attach the
+          // on logout method to the element.
+          this.el.on('click', this._on_logout_clicked);
+          break;
       }
     },
 
@@ -30,12 +39,14 @@ ckan.module('persona', function(jQuery, _) {
    },
 
    _onlogin: function(assertion) {
-     // FIXME: Don't hardcode login URL.
+     // FIXME: Don't hardcode URLs here.
      this.sandbox.jQuery.ajax({
        type: 'POST',
        url: '/user/login',
        data: {assertion: assertion},
-       success: function(res, status, xhr) { window.location.reload(); },
+       success: function(res, status, xhr) {
+         window.location.replace("/dashboard");
+       },
        error: function(xhr, status, err) {
          navigator.id.logout();
          alert("Login failure: " + err);
@@ -55,7 +66,6 @@ ckan.module('persona', function(jQuery, _) {
        }
      });
    }
-
 
   };
 });

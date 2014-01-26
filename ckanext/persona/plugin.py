@@ -15,6 +15,7 @@ import pylons.config as config
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import ckan.lib.helpers as helpers
 
 
 class PersonaVerificationError(Exception):
@@ -37,6 +38,7 @@ class PersonaPlugin(plugins.SingletonPlugin):
 
         '''
         toolkit.add_template_directory(config, 'templates')
+        toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', 'persona')
 
     def login(self):
@@ -65,7 +67,8 @@ class PersonaPlugin(plugins.SingletonPlugin):
 
             # Store the name of the verified logged-in user in the Beaker
             # sesssion store.
-            pylons.session['ckanext-persona'] = user['name']
+            pylons.session['ckanext-persona-user'] = user['name']
+            pylons.session['ckanext-persona-email'] = email
             pylons.session.save()
 
     def identify(self):
@@ -75,28 +78,30 @@ class PersonaPlugin(plugins.SingletonPlugin):
 
         '''
         # Try to get the item that login() placed in the session.
-        user = pylons.session.get('ckanext-persona')
+        user = pylons.session.get('ckanext-persona-user')
         if user:
             # We've found a logged-in user. Set c.user to let CKAN know.
             toolkit.c.user = user
 
-    def _delete_session_item(self):
+    def _delete_session_items(self):
         import pylons
-        if 'ckanext-persona' in pylons.session:
-            del pylons.session['ckanext-persona']
-            pylons.session.save()
+        if 'ckanext-persona-user' in pylons.session:
+            del pylons.session['ckanext-persona-user']
+        if 'ckanext-persona-email' in pylons.session:
+            del pylons.session['ckanext-persona-email']
+        pylons.session.save()
 
     def logout(self):
         '''Handle a logout.'''
 
         # Delete the session item, so that identify() will no longer find it.
-        self._delete_session_item()
+        self._delete_session_items()
 
     def abort(self, status_code, detail, headers, comment):
         '''Handle an abort.'''
 
         # Delete the session item, so that identify() will no longer find it.
-        self._delete_session_item()
+        self._delete_session_items()
 
 
 def get_user(email):

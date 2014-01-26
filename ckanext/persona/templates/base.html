@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{%- block scripts %}
+  {% resource 'persona/persona.js' %}
+  <script src="https://login.persona.org/include.js"
+          data-module="persona" data-module-action="watch"
+          {% if 'ckanext-persona-email' in session %}
+            data-module-user="{{ session['ckanext-persona-email'] }}"
+          {% endif %}></script>
+{% endblock -%}

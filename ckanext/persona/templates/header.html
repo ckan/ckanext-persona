@@ -1,19 +1,5 @@
 {% ckan_extends %}
 
-{% block header_account_notlogged %}
-
-  {% resource 'persona/persona.js' %}
-  <script src="https://login.persona.org/include.js"></script>
-  <li>
-    <a data-module="persona" data-module-action="login">
-      Log in with Mozilla Persona
-    </a>
-  </li>
-
-  {{ super() }}
-
-{% endblock %}
-
 {% block header_account_log_out_link %}
   <li>
     <a href="/user/_logout" data-module="persona" data-module-action="logout"
