@@ -54,6 +54,7 @@ In no particular order:
   to login to
 - Generate better unique user names based on emails
   (e.g. first half of email, with a random number appended if necessary)
+- Give the user a chance to change the generated email address before their account is created
 - Implement logging-in via Persona without JavaScript
 - Add an API function to CKAN for searching for users by email, so this plugin
   doesn't need to access CKAN's model directly to do it
@@ -61,9 +62,9 @@ In no particular order:
   we need a couple of new template blocks on the login and register pages in CKAN so that his plugin
   doesn't need to duplicate template code from core
 - Verify SSL certificates (or is `requests` already doing this?)
-- Implement CSRF protection
-- Tests
-  (the code we need to test is JavaScript heavy, so maybe test using Selenium)
+- Implement [CSRF protection](https://developer.mozilla.org/en-US/Persona/Security_Considerations)
+- Tests, Mozilla [recommend Selenium for this](https://developer.mozilla.org/en-US/Persona/The_implementor_s_guide/Testing?redirectlocale=en-US&redirectslug=Persona%2FThe_implementor_s_guide%2FTesting)
 - Better error handling when verification fails
-- Better random password generator, or allow passwordless accounts
-  (that cannot be logged-in to via the traditional method) in CKAN
+- Allow passwordless accounts in CKAN
+- Allow users to have multiple email addresses in CKAN, and verify those addresses using Persona:    
+  <https://developer.mozilla.org/en-US/Persona/The_implementor_s_guide/Adding_extra_email_addresses_with_Persona>
