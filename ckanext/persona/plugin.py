@@ -135,8 +135,25 @@ def generate_user_name(email):
     '''Generate a random user name for the given email address.
 
     '''
-    # FIXME: Generate a better user name, based on the email, but still making
-    # sure it's unique.
+    import ckan.model as model
+
+    first = email.split('@')[0].replace('.', '')
+    if not model.User.get(first):
+        return first
+
+    def get_next_name(name):
+        number = 1
+        while True:
+            yield u"{name}_{number}".format(name=name, number=number)
+            number += 1
+
+    for name in get_next_name(first):
+        if not model.User.get(name):
+            return name
+
+    # The sun will have faded by the time we get here, or we'll
+    # have cycled around all of the ints at least Int.MAX times,
+    # one of the two.
     return str(uuid.uuid4())
 
 
