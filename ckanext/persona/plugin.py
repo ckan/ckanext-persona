@@ -67,7 +67,7 @@ class PersonaPlugin(plugins.SingletonPlugin):
 
             # Store the name of the verified logged-in user in the Beaker
             # sesssion store.
-            pylons.session['ckanext-persona-user'] = user['name']
+            pylons.session['ckanext-persona-user'] = user['id']
             pylons.session['ckanext-persona-email'] = email
             pylons.session.save()
 
@@ -80,8 +80,12 @@ class PersonaPlugin(plugins.SingletonPlugin):
         # Try to get the item that login() placed in the session.
         user = pylons.session.get('ckanext-persona-user')
         if user:
-            # We've found a logged-in user. Set c.user to let CKAN know.
-            toolkit.c.user = user
+            import ckan.model as model
+
+            user = model.User.get(user)
+            if user:
+                # We've found a logged-in user. Set c.user to let CKAN know.
+                toolkit.c.user = user.name
 
     def _delete_session_items(self):
         import pylons
